@@ -1,0 +1,12 @@
+version: "3"
+
+services:
+    tiddlywiki:
+        env_file: .env
+        build: ./
+        volumes:
+            - ./data:/tw/data
+        ports:
+            - ${PORT}:8080
+        container_name: ${CTNAME}
+        restart: always

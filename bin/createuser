@@ -1,0 +1,27 @@
+#!/bin/sh
+set -eo > /dev/null
+LPREF='date +%Y.%m.%d-%H:%M:%S'
+
+l() {
+    echo "$($LPREF) $1"
+}
+
+l "Checking and creating user and group"
+
+[ -z "$1" ] && uname='user' || uname="$1"
+if [ -z "$2" ]; then
+	[ -z "$1" ] && gname='user' || gname="$1"
+else
+	gname="$2"
+fi
+[ -z "$uname" ] && l 'ERROR: Username is empty!'
+[ -z "$gname" ] && l 'ERROR: Groupname is empty!'
+[ -z "$CUID" ] && CUID=33
+[ -z "$CGID" ] && CGID=33
+l "Username is $uname ($CUID)"
+l "Groupname is $group ($CGID)"
+
+sed -i '/^[^:]*:[^:]*:'"$CUID"':/d' /etc/passwd
+sed -i '/^[^:]*:[^:]*:'"$CGID"':/d' /etc/group
+addgroup -g "$CGID" "$uname"
+adduser -D -u "$CUID" -G "$uname" "$gname"

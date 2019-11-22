@@ -1,0 +1,6 @@
+*.swp
+*.swo
+*.bk
+*_bk
+.env
+data
