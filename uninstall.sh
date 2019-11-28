@@ -2,4 +2,5 @@
 set -e
 cd `dirname "$0"`
 [ -f ".env" ] && . ./.env
-docker build -t "$CTNAME:latest" .
+docker-compose down 
+docker rmi $CTNAME

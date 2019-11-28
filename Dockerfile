@@ -10,6 +10,7 @@ ENV CUID "$CUID"
 ENV CGID "$CGID"
 ENV HOME /tw
 
+ADD .env /etc/.env
 ADD /bin/tw /usr/local/bin/tw
 ADD /bin/createuser /usr/local/bin/createuser
 
@@ -19,6 +20,7 @@ RUN npm install -g tiddlywiki
 RUN cd /usr/lib/node_modules/tiddlywiki/plugins && cd /tmp/ && \
     echo 'TW5-HotZone TW5-TiddlyMap TW5-TopStoryView TW5-Vis.js' | tr ' ' '\n' | awk '{ print "wget https://github.com/felixhayashi/"$1"/archive/master.zip -O "$1".zip\nunzip "$1".zip \""$1"-master/dist/*\"\ncp -R "$1"-master/dist/* /usr/lib/node_modules/tiddlywiki/plugins/\nrm -rf "$1"*" }' | sh
 VOLUME /tw/data
+RUN chown -R ${UNAME}:${UNAME} /tw
 EXPOSE 8080
 USER ${UNAME}
 WORKDIR /tw
