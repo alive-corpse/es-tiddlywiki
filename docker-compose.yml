@@ -6,7 +6,12 @@ services:
         build: ./
         volumes:
             - ./data:/tw/data
-        ports:
-            - ${PORT}:8080
+        #ports:
+        #    - ${PORT}:8080
         container_name: ${CTNAME}
         restart: always
+
+networks:
+  default:
+    external:
+        name: reverse
